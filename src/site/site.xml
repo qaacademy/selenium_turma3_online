@@ -1,0 +1,10 @@
+<project name="qaacademy_selenium_turma_3">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.5</version>
+    </skin>
+    <body>
+        <menu ref="reports"/>
+    </body>
+</project>
