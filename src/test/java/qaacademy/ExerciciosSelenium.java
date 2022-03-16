@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ExerciciosSelenium {
-    static WebDriver driver; 
+    static WebDriver driver;
 
     @Test
     public void testesFormularioSelenium() throws InterruptedException {
@@ -21,14 +21,20 @@ public class ExerciciosSelenium {
         driver.findElement(By.xpath("//*[@ng-model='EmailAdress']")).sendKeys("contato@qaacademy.com.br");
         driver.findElement(By.xpath("//*[@ng-model='Phone']")).sendKeys("11977413512");
 
-        //selecionando o radiobutton
+        // selecionando o radiobutton
         driver.findElement(By.xpath("//*[@ng-model='radiovalue' and @value='Male']")).click();
-        //validação
-        Assert.assertTrue("Elemento não selecionado",driver.findElement(By.xpath("//*[@ng-model='radiovalue' and @value='Male']")).isSelected());
-
+        // validação
+        Assert.assertTrue("Elemento não selecionado",
+                driver.findElement(By.xpath("//*[@ng-model='radiovalue' and @value='Male']")).isSelected());
+        // Checkbox
         driver.findElement(By.xpath("//input[@value='Movies']")).click();
-        Assert.assertTrue("Checkbox não selecionada",driver.findElement(By.xpath("//input[@value='Movies']")).isSelected());
+        Assert.assertTrue("Checkbox não selecionada",
+                driver.findElement(By.xpath("//input[@value='Movies']")).isSelected());
 
+        // Selecionar uma lista
+        driver.findElement(By.xpath("//div[@id='msdd']")).click();
+        Thread.sleep(1000);
+        driver.findElement(By.xpath("//a[contains(text(),'Ukrainian')]")).click();
 
 
     }
