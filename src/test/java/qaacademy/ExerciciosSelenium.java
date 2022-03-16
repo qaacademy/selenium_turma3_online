@@ -1,6 +1,7 @@
 package qaacademy;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,16 @@ public class ExerciciosSelenium {
         driver.findElement(By.xpath("//*[@id='basicBootstrapForm']/div[2]/div/textarea")).sendKeys("Av Paulista, 509");
         driver.findElement(By.xpath("//*[@ng-model='EmailAdress']")).sendKeys("contato@qaacademy.com.br");
         driver.findElement(By.xpath("//*[@ng-model='Phone']")).sendKeys("11977413512");
+
+        //selecionando o radiobutton
+        driver.findElement(By.xpath("//*[@ng-model='radiovalue' and @value='Male']")).click();
+        //validação
+        Assert.assertTrue("Elemento não selecionado",driver.findElement(By.xpath("//*[@ng-model='radiovalue' and @value='Male']")).isSelected());
+
+        driver.findElement(By.xpath("//input[@value='Movies']")).click();
+        Assert.assertTrue("Checkbox não selecionada",driver.findElement(By.xpath("//input[@value='Movies']")).isSelected());
+
+
 
     }
 
