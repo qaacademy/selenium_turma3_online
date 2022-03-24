@@ -1,5 +1,8 @@
 package qaacademy;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,9 +20,16 @@ public class ExerciciosSelenium {
     @Before
     public void before() throws InterruptedException {
         driver = new ChromeDriver();
-        driver.get("http://demo.automationtesting.in/Register.html");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        Thread.sleep(2000);
+        driver.get("http://demo.automationtesting.in/Register.html");
+        WebElement adToolbar = driver.findElement(By.cssSelector("body > ins:nth-child(8) > ins.ee > span > svg > path"));
+        if (adToolbar.isDisplayed()) {
+            adToolbar.click();
+        }
+        else{
+            System.out.println("WebElement não esta presente");
+        }
     }
 
     @Test
@@ -40,7 +50,6 @@ public class ExerciciosSelenium {
                 driver.findElement(By.xpath("//input[@value='Movies']")).isSelected());
         // Selecionar uma lista do tipo <li>
         driver.findElement(By.xpath("//div[@id='msdd']")).click();
-        Thread.sleep(2000);
         driver.findElement(By.xpath("//a[contains(text(),'Portuguese')]")).click();
         driver.findElement(By.xpath("//a[contains(text(),'English')]")).click();
 
@@ -77,14 +86,18 @@ public class ExerciciosSelenium {
        
 
         driver.findElement(By.xpath("//*[@id='secondpassword']")).sendKeys("Teste");
+        
+        driver.findElement(By.cssSelector("#submitbtn")).click();
 
-        driver.findElement(By.xpath("//*[@id='submitbtn']")).click();
+        String msgErroTelefone = "Portuguese";
+        Assert.assertTrue("Linguagem não está presente", driver.getPageSource().contains(msgErroTelefone));
+       
 
     }
 
+ 
     @AfterClass
     public static void after() throws InterruptedException {
-        Thread.sleep(3000);
         driver.quit();
     }
 }
