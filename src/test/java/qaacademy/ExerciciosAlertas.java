@@ -11,6 +11,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ExerciciosAlertas {
     WebDriver driver;
@@ -34,8 +35,29 @@ public class ExerciciosAlertas {
         Assert.assertEquals(mensagemEsperada, mensagemAlerta);
     }
 
+    @Test
+    public void testesAlertaComOkCancela() throws InterruptedException {
+        driver.findElement(By.xpath("//a[contains(text(),'Alert with OK & Cancel')]")).click();
+        driver.findElement(By.xpath("//button[@class='btn btn-primary']")).click();
+        Alert alert = driver.switchTo().alert();
+        String mensagemAlerta = alert.getText();
+        String mensagemEsperada = "Press a Button !";
+        Thread.sleep(2000);
+        alert.dismiss();
+        Assert.assertEquals(mensagemEsperada, mensagemAlerta);
+    }
+
+    @Test
+    public void testesAlertaComPrompt() throws InterruptedException {
+        driver.findElement(By.xpath("//a[contains(text(),'Alert with Textbox')]")).click();
+        driver.findElement(By.xpath("//button[@class='btn btn-info']")).click();
+        Alert alert = driver.switchTo().alert();
+        alert.sendKeys("QA Academy | Formação em automatização de testes web");
+        alert.accept();
+    }
+
     @After
-    public void after(){
+    public void after() {
         driver.quit();
     }
 }
