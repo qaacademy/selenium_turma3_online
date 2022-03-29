@@ -25,11 +25,11 @@ public class ExerciciosNovaTab {
     @Test
     public void testeJanelasWindow() throws InterruptedException {
         driver.findElement(By.linkText("click")).click();
-        Object[] janelas = driver.getWindowHandles().toArray();
-        driver.switchTo().window(janelas[1].toString());
-        Assert.assertTrue(driver.getPageSource().contains("Selenium automates"));
-        driver.getCurrentUrl().equals("https://www.selenium.dev/");
-
+        System.out.println(driver.getCurrentUrl());
+        Object[] janelas = driver.getWindowHandles().toArray(); // Estou mapeando as jenlas que estão abertas
+        driver.switchTo().window(janelas[1].toString());// faz a troca de fato
+        System.out.println(driver.getCurrentUrl());
+        Assert.assertTrue(driver.getCurrentUrl().equals("https://www.selenium.dev/"));
     }
 
     @Test
