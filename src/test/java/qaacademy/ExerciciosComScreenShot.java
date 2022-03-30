@@ -1,17 +1,22 @@
 package qaacademy;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class ExerciciosNovaTab {
+public class ExerciciosComScreenShot {
     WebDriver driver;
 
     @Before
@@ -23,25 +28,23 @@ public class ExerciciosNovaTab {
     }
 
     @Test
-    public void testeJanelasWindow() throws InterruptedException {
+    public void testeJanelasWindow() throws InterruptedException, IOException {
+        screenShot("Janela Windows 1");
         driver.findElement(By.linkText("click")).click();
+       
         System.out.println(driver.getCurrentUrl());
         Object[] janelas = driver.getWindowHandles().toArray(); // Estou mapeando as jenlas que estão abertas
         driver.switchTo().window(janelas[1].toString());// faz a troca de fato
+        screenShot("Tab Navegador");
         System.out.println(driver.getCurrentUrl());
         Assert.assertTrue(driver.getCurrentUrl().equals("https://www.selenium.dev/"));
     }
 
-    @Test
-    public void testesAlertaComOkCancela() throws InterruptedException {
-        driver.findElement(By.xpath("//a[contains(text(),'Alert with OK & Cancel')]")).click();
-        driver.findElement(By.xpath("//button[@class='btn btn-primary']")).click();
-        Alert alert = driver.switchTo().alert();
-        String mensagemAlerta = alert.getText();
-        String mensagemEsperada = "Press a Button !";
-        Thread.sleep(2000);
-        alert.dismiss();
-        Assert.assertEquals(mensagemEsperada, mensagemAlerta);
+
+    public void screenShot(String nomeScreenShot) throws IOException {
+        TakesScreenshot screenshot = ((TakesScreenshot) driver); // Convertendo o driver em TakesScreenshot
+        File arquivo = screenshot.getScreenshotAs(OutputType.FILE); // Tira o screen shot e transforma para o tipo File
+        FileUtils.copyFile(arquivo, new File("output"+File.separator+ nomeScreenShot+"_screenshot.jpg"));// Grava os bytes do arquivo no sistema operacional
     }
 
     @After
