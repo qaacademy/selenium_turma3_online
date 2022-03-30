@@ -23,13 +23,7 @@ public class ExerciciosSelenium {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("http://demo.automationtesting.in/Register.html");
-        WebElement adToolbar = driver.findElement(By.cssSelector("body > ins:nth-child(8) > ins.ee > span > svg > path"));
-        if (adToolbar.isDisplayed()) {
-            adToolbar.click();
-        }
-        else{
-            System.out.println("WebElement não esta presente");
-        }
+        
     }
 
     @Test
@@ -53,7 +47,6 @@ public class ExerciciosSelenium {
         driver.findElement(By.xpath("//a[contains(text(),'Portuguese')]")).click();
         driver.findElement(By.xpath("//a[contains(text(),'English')]")).click();
 
-    
         boolean linguagemPortuguesSelecionada = driver
                 .findElement(
                         By.xpath("//div[contains(text(),'Portuguese') and @class='ui-autocomplete-multiselect-item']"))
@@ -67,37 +60,41 @@ public class ExerciciosSelenium {
         driver.findElement(By.xpath("//*[@class='select2-selection__arrow']")).click();
         driver.findElement(By.xpath("//li[contains(text(),'United States of America')]")).click();
 
-
-     //Listas do tipo Option
+        // Listas do tipo Option
         Select selectObject = new Select(driver.findElement(By.xpath("//select[@id='Skills']")));
         selectObject.selectByVisibleText("Java");
 
         Select selectAnoAniversario = new Select(driver.findElement(By.xpath("//select[@id='yearbox']")));
         selectAnoAniversario.selectByVisibleText("1988");
 
-        Select selectMes = new Select(driver.findElement(By.xpath("//body/section[@id='section']/div[1]/div[1]/div[2]/form[1]/div[11]/div[2]/select[1]")));
+        Select selectMes = new Select(driver.findElement(
+                By.xpath("//body/section[@id='section']/div[1]/div[1]/div[2]/form[1]/div[11]/div[2]/select[1]")));
         selectMes.selectByVisibleText("April");
 
         Select selectDia = new Select(driver.findElement(By.xpath("//select[@id='daybox']")));
         selectDia.selectByVisibleText("15");
 
-
-        driver.findElement(By.xpath("//*[@id='firstpassword']")).sendKeys("Teste");;
-       
+        driver.findElement(By.xpath("//*[@id='firstpassword']")).sendKeys("Teste");
+        ;
 
         driver.findElement(By.xpath("//*[@id='secondpassword']")).sendKeys("Teste");
-        
+
         driver.findElement(By.cssSelector("#submitbtn")).click();
 
         String msgErroTelefone = "Portuguese";
         Assert.assertTrue("Linguagem não está presente", driver.getPageSource().contains(msgErroTelefone));
-       
 
     }
 
- 
+    @Test
+    public void uploadFoto() {
+        driver.findElement(By.xpath("//input[@id='imagesrc']"))
+        .sendKeys("/Users/mac/Documents/QA Academy/qaacademy_selenium_turma_3/src/test/java/qaacademy/resources/Volta contexto_screenshot.jpg");
+    }
+
     @AfterClass
     public static void after() throws InterruptedException {
+        Thread.sleep(5000);
         driver.quit();
     }
 }
