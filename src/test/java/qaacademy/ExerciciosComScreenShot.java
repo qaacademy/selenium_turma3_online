@@ -15,14 +15,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ExerciciosComScreenShot {
     WebDriver driver;
 
     @Before
     public void iniciaTeste() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        setupChromeDriver();
         driver.get("http://demo.automationtesting.in/Windows.html");
 
     }
@@ -50,6 +50,16 @@ public class ExerciciosComScreenShot {
     @After
     public void after() {
         driver.quit();
+    }
+
+    public void setupChromeDriver(){
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true); //Setup chrome headless(Em segundo plano)
+        options.setAcceptInsecureCerts(true); //Executa os testes mesmo com algum certificado inseguro
+        options.addArguments("disable-popup-blocking"); 
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
     }
 
 }
